@@ -1,3 +1,174 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: simplelife;
+    src: url(/fonts/simplelife.eot);
+    src: url(/fonts/simplelife.eot) format('embedded-opentype'),
+         url(/fonts/simplelife.woff2) format('woff2'),
+         url(/fonts/simplelife.woff) format('woff'),
+         url(/fonts/simplelife.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: simplelife !important;
+    font-size: 105%;
+}
+
+.beatBackground {
+    background-size: contain;
+    background-repeat: no-repeat;
+
+}
+
+.beatBox {
+    background-image: url("/all_beats.png");
+    align-items: center;
+}
+
+#polyrhythmcontroller, #polyrhythmtransport {
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+#polyrhythmcontrollerbtns {
+    margin-left: 70px;
+    margin-bottom: 12px;
+}
+
+#polyrhythmtransport {
+    font-size: 70%;
+    position: absolute;
+    transform: scale(200%);
+    margin-left: 274px;
+    margin-top: -187px;
+}
+
+.polyrhythmtext {
+    margin-top: -20px;
+    font-size: 200% !important;
+}
+
+.polybtnplay {
+color: #e37029;
+background-color: #fcf0e4;
+border: 3px solid #faa956;
+border-radius: 10%;
+padding: 7px 7px;
+margin: 2px 2px;
+margin-right: 4px;
+}
+
+.polybtnplay:hover {
+    color: #c05513;
+    filter: hue-rotate(-10deg), !important;
+}
+
+.polybtnstop {
+    color: #e37029;
+    background-color: #ffc993;
+    border: 3px solid #faa956;
+    border-radius: 10%;
+    padding: 7px 7px;
+    margin: 2px 2px;
+}
+
+.polybtnstop:hover {
+    color: #c05513;
+    filter: hue-rotate(-10deg), !important;
+}
+
+.polybtnplay:active, .polybtnstop:active {
+    transform: scale(95%);
+    color: black;
+}
+
+.firstbeatbtn {
+    margin-bottom: 15px;
+}
+
+.bpm {
+    margin-top: 15px;
+}
+
+.firstBeat {
+    background-image: url("/all_beats.png"), url("/beat_1.png");
+}
+.activeFirstBeat {
+    background-image: url("/all_beats.png"), url("/beat_1.png"), url("/active_step.png");
+}
+
+.secondBeat {
+    background-image: url("/beat_2_pos_z_index.png"), url("/all_beats.png"),url("/beat_2_neg_z_index.png");
+}
+.activeSecondBeat {
+    background-image: url("/beat_2_pos_z_index.png"), url("/all_beats.png"),url("/beat_2_neg_z_index.png"), url("/active_step.png");
+}
+
+.firstSecondBeat {
+    background-image: url("/beat_2_pos_z_index.png"), url("/all_beats.png"),url("/beat_2_neg_z_index.png"),url("/beat_1.png");
+}
+.activeFirstSecondBeat {
+    background-image: url("/beat_2_pos_z_index.png"), url("/all_beats.png"),url("/beat_2_neg_z_index.png"),url("/beat_1.png"), url("/active_step.png");
+}
+
+.activeBeat {
+    background-image: url("/all_beats.png"),url("/active_step.png");
+}
+
+#secondbeattext {
+    color: #faa956;
+    position: absolute;
+    margin-top: 8px;
+    margin-left: 45px;
+}
+
+#overtext {
+    position: absolute;
+    margin-top: 36px;
+    margin-left: 9px;
+}
+
+#firstbeattext {
+    position: absolute;
+    margin-top: 75px;
+    margin-left: 45px;
+}
+
+#bpmtext {
+    position: absolute;
+    margin-top: 138px;
+    margin-left: -14px;
+    transform: scale(75%);
+}
+
+.btn {
+    color: white;
+}
+.btn:active {
+    color: #e37029;
+}
+
+.btnerror {
+    background-color: #faa956;
+    border: 3px solid #e37029;
+}
+
+.btnerror:hover {
+    background-color: #fa9c3f;
+    border: 3px solid #e37029;
+}
+
+.btnsuccess {
+    background-color: #e37029 ;
+    border: 3px solid #faa956;
+}
+
+.btnsuccess:hover {
+    background-color: #cf5e2a;
+    border: 3px solid #faa956;
+}

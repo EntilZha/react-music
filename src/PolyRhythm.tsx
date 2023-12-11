@@ -1,18 +1,33 @@
 import { ReactNode, useState } from "react";
+import { Sampler, Synth } from "tone";
+import { useInterval } from "./useInterval";
 
-function BeatControls({ className, label, value, setValue }) {
+function BeatControls({
+  className,
+  value,
+  setValue,
+  minLimit,
+  maxLimit,
+  interval,
+}) {
   return (
-    <div className={className}>
-      {label}: {value}
-      <button
-        onClick={() => setValue(Math.max(1, value - 1))}
-        className="btn btn-error"
-      >
-        -
-      </button>
-      <button onClick={() => setValue(value + 1)} className="btn btn-success">
-        +
-      </button>
+    <div className={className + " flex flex-row"}>
+      <div className="w-12 mr-1">
+        <button
+          onClick={() => setValue(Math.max(minLimit, value - interval))}
+          className="btn btnerror"
+        >
+          -
+        </button>
+      </div>
+      <div className="w-12">
+        <button
+          onClick={() => setValue(Math.min(maxLimit, value + interval))}
+          className="btn btnsuccess"
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 }
@@ -21,6 +36,17 @@ export function PolyRhythm() {
   const [beat, setBeat] = useState<number>(0);
   const [firstBeat, setFirstBeat] = useState<number>(3);
   const [secondBeat, setSecondBeat] = useState<number>(4);
+  const [playing, setPlaying] = useState<boolean>(false);
+  const [bpm, setBpm] = useState<number>(90);
+
+  const delay = (1 / (bpm / 60)) * 1000;
+
+  useInterval(() => {
+    if (playing) {
+      setBeat((beat + 1) % steps);
+    }
+  }, delay);
+
   const steps = firstBeat * secondBeat;
   const rows: Array<ReactNode> = [];
   var cols: Array<ReactNode> = [];
@@ -34,19 +60,49 @@ export function PolyRhythm() {
       }
       cols = [];
     }
-    var beatClasses: Array<string> = ["p-5 border-4", "flex-col"];
-    if (i % firstBeat == 0) {
-      beatClasses.push("font-bold");
+    const isActive = i == beat;
+    const isFirstBeat = i % firstBeat == 0;
+    const isSecondBeat = i % secondBeat == 0;
+    var beatClasses: Array<string> = [
+      "p-16",
+      "mt-0 mr-4 ml-4 mb-0",
+      "flex-col",
+      "beatBox",
+      "text-center",
+      "beatBackground",
+    ];
+    if (isFirstBeat && isSecondBeat) {
+      if (isActive) {
+        beatClasses.push("activeFirstSecondBeat");
+      } else {
+        beatClasses.push("firstSecondBeat");
+      }
+    } else {
+      if (isFirstBeat) {
+        if (isActive) {
+          beatClasses.push("activeFirstBeat");
+        } else {
+          beatClasses.push("firstBeat");
+        }
+      }
+      if (isSecondBeat) {
+        if (isActive) {
+          beatClasses.push("activeSecondBeat");
+        } else {
+          beatClasses.push("secondBeat");
+        }
+      }
     }
-    if (i % secondBeat == 0) {
-      beatClasses.push("underline");
-    }
-    if (i == beat) {
-      beatClasses.push("text-red-500");
+    if (isActive) {
+      beatClasses.push("text-white");
+      if (!isFirstBeat && !isSecondBeat) {
+        beatClasses.push("activeBeat");
+      }
     }
     cols.push(
       <div key={i} className={beatClasses.join(" ")}>
-        {(i % firstBeat) + 1}
+        {/* text inside boxes */}
+        <div className="polyrhythmtext">{(i % firstBeat) + 1}</div>
       </div>
     );
   }
@@ -56,27 +112,62 @@ export function PolyRhythm() {
 
   return (
     <div>
-      <BeatControls
-        className="font-bold"
-        label="First Beat: "
-        value={firstBeat}
-        setValue={setFirstBeat}
-      />
-      <BeatControls
-        className="underline"
-        label="Second Beat: "
-        value={secondBeat}
-        setValue={setSecondBeat}
-      />
-      <div>Total beats: {steps}</div>
-      <div>Current beat: {beat + 1}</div>
+      <div id="polyrhythmcontroller" className="flex flex-row">
+        <div>
+          <div id="secondbeattext">{secondBeat}</div>
+          <div id="overtext">over</div>
+          <div id="firstbeattext">{firstBeat}</div>
+          <div id="bpmtext">{bpm} bpm</div>
+        </div>
+        <div id="polyrhythmcontrollerbtns">
+          <BeatControls
+            className="firstbeatbtn"
+            value={secondBeat}
+            setValue={setSecondBeat}
+            maxLimit={7}
+            minLimit={2}
+            interval={1}
+          />
+          <BeatControls
+            className=""
+            value={firstBeat}
+            setValue={setFirstBeat}
+            maxLimit={7}
+            minLimit={1}
+            interval={1}
+          />
+
+          <BeatControls
+            className="bpm"
+            value={bpm}
+            setValue={setBpm}
+            maxLimit={300}
+            minLimit={3}
+            interval={10}
+          />
+        </div>
+      </div>
+      <div id="polyrhythmtransport">
+        <button
+          className="polybtnplay"
+          onClick={() => {
+            setPlaying(true);
+            setBeat(0);
+          }}
+        >
+          PLAY
+        </button>
+        <button
+          className="polybtnstop"
+          onClick={() => {
+            setPlaying(false);
+            setBeat(0);
+          }}
+        >
+          STOP
+        </button>
+      </div>
       <div className="flex flex-col">{rows}</div>
-      <button
-        className="btn btn-info"
-        onClick={() => setBeat((beat + 1) % steps)}
-      >
-        Beat
-      </button>
     </div>
   );
 }

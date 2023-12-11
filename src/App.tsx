@@ -1,17 +1,16 @@
-import { useState } from 'react'
-import { PolyRhythm } from './PolyRhythm'
+import { useState } from "react";
+import { PolyRhythm } from "./PolyRhythm";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <h1>Polyrhythms</h1>
-      <div className="card">
-          <PolyRhythm/>
+      <div style={{ width: "600px" }}>
+        <div className="card">
+          <PolyRhythm />
+        </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
