@@ -25,7 +25,7 @@
 }
 
 .beatBox {
-    background-image: url("/all_beats.png");
+    background-image: url("/images/all_beats.png");
     align-items: center;
 }
 
@@ -54,13 +54,16 @@
 }
 
 .polybtnplay {
+position: absolute;
 color: #e37029;
 background-color: #fcf0e4;
 border: 3px solid #faa956;
 border-radius: 10%;
 padding: 7px 7px;
 margin: 2px 2px;
-margin-right: 4px;
+margin-left: -30px;
+margin-top: -10px;
+
 }
 
 .polybtnplay:hover {
@@ -69,13 +72,16 @@ margin-right: 4px;
 }
 
 .polybtnstop {
+    position: absolute;
     color: #e37029;
     background-color: #ffc993;
     border: 3px solid #faa956;
     border-radius: 10%;
     padding: 7px 7px;
     margin: 2px 2px;
-}
+    top: 35px;
+    left: -33px;
+    transform: scaleX(97%);}
 
 .polybtnstop:hover {
     color: #c05513;
@@ -96,28 +102,28 @@ margin-right: 4px;
 }
 
 .firstBeat {
-    background-image: url("/all_beats.png"), url("/beat_1.png");
+    background-image: url("/images/all_beats.png"), url("/images/beat_1.png");
 }
 .activeFirstBeat {
-    background-image: url("/all_beats.png"), url("/beat_1.png"), url("/active_step.png");
+    background-image: url("/images/all_beats.png"), url("/images/beat_1.png"), url("/images/active_step.png");
 }
 
 .secondBeat {
-    background-image: url("/beat_2_pos_z_index.png"), url("/all_beats.png"),url("/beat_2_neg_z_index.png");
+    background-image: url("/images/beat_2_pos_z_index.png"), url("/images/all_beats.png"),url("/images/beat_2_neg_z_index.png");
 }
 .activeSecondBeat {
-    background-image: url("/beat_2_pos_z_index.png"), url("/all_beats.png"),url("/beat_2_neg_z_index.png"), url("/active_step.png");
+    background-image: url("/images/beat_2_pos_z_index.png"), url("/images/all_beats.png"),url("/images/beat_2_neg_z_index.png"), url("/images/active_step.png");
 }
 
 .firstSecondBeat {
-    background-image: url("/beat_2_pos_z_index.png"), url("/all_beats.png"),url("/beat_2_neg_z_index.png"),url("/beat_1.png");
+    background-image: url("/images/beat_2_pos_z_index.png"), url("/images/all_beats.png"),url("/images/beat_2_neg_z_index.png"),url("/images/beat_1.png");
 }
 .activeFirstSecondBeat {
-    background-image: url("/beat_2_pos_z_index.png"), url("/all_beats.png"),url("/beat_2_neg_z_index.png"),url("/beat_1.png"), url("/active_step.png");
+    background-image: url("/images/beat_2_pos_z_index.png"), url("/images/all_beats.png"),url("/images/beat_2_neg_z_index.png"),url("/images/beat_1.png"), url("/images/active_step.png");
 }
 
 .activeBeat {
-    background-image: url("/all_beats.png"),url("/active_step.png");
+    background-image: url("/images/all_beats.png"),url("/images/active_step.png");
 }
 
 #secondbeattext {
@@ -171,4 +177,47 @@ margin-right: 4px;
 .btnsuccess:hover {
     background-color: #cf5e2a;
     border: 3px solid #faa956;
+}
+.text-center {
+    text-align: center;
+}
+.p-16 {
+    padding: 4rem;
+}
+.flex-col {
+    flex-direction: column;
+}
+.mt-0 {
+    margin-top: 0px;
+}
+
+.mr-4 {
+    margin-right: 1rem;
+}
+.ml-4 {
+    margin-left: 1rem;
+}
+.mb-0 {
+    margin-bottom: 0px;
+}
+
+.text-white {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.border-green-400 {
+    --tw-border-opacity: 1;
+    border-color: rgb(74 222 128 / var(--tw-border-opacity));
+}
+.flex-row {
+    flex-direction: row;
+}
+.flex {
+    display: flex;
+}
+.w-12 {
+    width: 3rem;
+}
+.mr-1 {
+    margin-right: 0.25rem;
 }

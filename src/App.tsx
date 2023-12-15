@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { PolyRhythm } from "./PolyRhythm";
 
 function App() {

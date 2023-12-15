@@ -1,6 +1,14 @@
 import { ReactNode, useState } from "react";
-import { Sampler, Synth } from "tone";
 import { useInterval } from "./useInterval";
+
+type BeatControlsProps = {
+  className: string;
+  value: any;
+  setValue: (x: any) => void;
+  minLimit: number;
+  maxLimit: number;
+  interval: number;
+};
 
 function BeatControls({
   className,
@@ -9,7 +17,7 @@ function BeatControls({
   minLimit,
   maxLimit,
   interval,
-}) {
+}: BeatControlsProps) {
   return (
     <div className={className + " flex flex-row"}>
       <div className="w-12 mr-1">
@@ -35,7 +43,7 @@ function BeatControls({
 export function PolyRhythm() {
   const [beat, setBeat] = useState<number>(0);
   const [firstBeat, setFirstBeat] = useState<number>(3);
-  const [secondBeat, setSecondBeat] = useState<number>(4);
+  const [secondBeat, setSecondBeat] = useState<number>(2);
   const [playing, setPlaying] = useState<boolean>(false);
   const [bpm, setBpm] = useState<number>(90);
 
@@ -50,7 +58,7 @@ export function PolyRhythm() {
   const steps = firstBeat * secondBeat;
   const rows: Array<ReactNode> = [];
   var cols: Array<ReactNode> = [];
-  const rowClasses = "border-1 border-green-400 flex flex-row";
+  const rowClasses = "flex flex-row";
   for (let i = 0; i < steps; i++) {
     // Check if at the start of a row
     if (i % firstBeat == 0) {
