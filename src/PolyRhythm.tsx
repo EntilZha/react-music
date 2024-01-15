@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { useInterval } from "./useInterval";
 
 type BeatControlsProps = {
@@ -117,9 +117,12 @@ export function PolyRhythm() {
   if (cols.length > 0) {
     rows.push(<div className={rowClasses}>{cols}</div>);
   }
+  const [firstAudio] = useState(new Audio("/chest.m4a"));
+  const [secondAudio] = useState(new Audio("/chest.m4a"));
 
   return (
     <div>
+      <button onClick={(_) => audio.play()}>Play</button>
       <div id="polyrhythmcontroller" className="flex flex-row">
         <div>
           <div id="secondbeattext">{secondBeat}</div>
