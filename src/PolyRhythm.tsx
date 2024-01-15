@@ -45,12 +45,43 @@ export function PolyRhythm() {
   const [firstBeat, setFirstBeat] = useState<number>(3);
   const [secondBeat, setSecondBeat] = useState<number>(2);
   const [playing, setPlaying] = useState<boolean>(false);
+  const [muted, setMuted] = useState<boolean>(false);
   const [bpm, setBpm] = useState<number>(90);
+  const polyLeftAudio = new Audio("/audio/polyright.wav");
+  polyLeftAudio.volume = 0.3;
+  const polyLeftRef = useRef(polyLeftAudio);
+  const polyLeft = polyLeftRef.current;
+  const polyRightAudio = new Audio("/audio/polyleft.wav");
+  polyRightAudio.volume = 0.7;
+  const polyRightRef = useRef(polyRightAudio);
+  const polyRight = polyRightRef.current;
+  const hiHatAudio = new Audio("/audio/HiHat.wav");
+  hiHatAudio.volume = 0.3;
+  const hiHatRef = useRef(hiHatAudio);
+  const hiHat = hiHatRef.current;
+
+  // const sampler = new Sampler({
+  //   urls: {
+  //     C3: "/audio/polyleft.wav",
+  //   },
+  //   release: 1,
+  // }).toDestination();
 
   const delay = (1 / (bpm / 60)) * 1000;
 
+  const playAudio = (audio: HTMLAudioElement) => {
+    if (!muted) {
+      // sampler.triggerAttackRelease("C3", "8n");
+      audio.currentTime = 0; // Reset playback position
+      audio
+        .play()
+        .catch((error) => console.error("Error playing audio:", error));
+    }
+  };
+
   useInterval(() => {
     if (playing) {
+      playAudio(hiHat);
       setBeat((beat + 1) % steps);
     }
   }, delay);
@@ -64,7 +95,11 @@ export function PolyRhythm() {
     if (i % firstBeat == 0) {
       // If there is content from prior row, push it out and reset cols
       if (cols.length > 0) {
-        rows.push(<div className={rowClasses}>{cols}</div>);
+        rows.push(
+          <div key={"step-" + i} className={rowClasses}>
+            {cols}
+          </div>
+        );
       }
       cols = [];
     }
@@ -81,6 +116,10 @@ export function PolyRhythm() {
     ];
     if (isFirstBeat && isSecondBeat) {
       if (isActive) {
+        if (playing) {
+          playAudio(polyRight);
+          playAudio(polyLeft);
+        }
         beatClasses.push("activeFirstSecondBeat");
       } else {
         beatClasses.push("firstSecondBeat");
@@ -88,6 +127,9 @@ export function PolyRhythm() {
     } else {
       if (isFirstBeat) {
         if (isActive) {
+          if (playing) {
+            playAudio(polyLeft);
+          }
           beatClasses.push("activeFirstBeat");
         } else {
           beatClasses.push("firstBeat");
@@ -95,6 +137,9 @@ export function PolyRhythm() {
       }
       if (isSecondBeat) {
         if (isActive) {
+          if (playing) {
+            playAudio(polyRight);
+          }
           beatClasses.push("activeSecondBeat");
         } else {
           beatClasses.push("secondBeat");
@@ -115,14 +160,25 @@ export function PolyRhythm() {
     );
   }
   if (cols.length > 0) {
-    rows.push(<div className={rowClasses}>{cols}</div>);
+    rows.push(
+      <div key={"step-" + (steps + 1)} className={rowClasses}>
+        {cols}
+      </div>
+    );
   }
-  const [firstAudio] = useState(new Audio("/chest.m4a"));
-  const [secondAudio] = useState(new Audio("/chest.m4a"));
 
   return (
     <div>
-      <button onClick={(_) => audio.play()}>Play</button>
+      <button
+        className={
+          "polyMuteButton " + muted
+            ? "polyMuteButtonMuted"
+            : "polyMuteButtonUnmuted"
+        }
+        onClick={(_) => setMuted(!muted)}
+      >
+        Mute
+      </button>
       <div id="polyrhythmcontroller" className="flex flex-row">
         <div>
           <div id="secondbeattext">{secondBeat}</div>
